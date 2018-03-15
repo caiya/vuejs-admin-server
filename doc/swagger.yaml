@@ -1,0 +1,329 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: 设备管理平台接口
+  contact:
+    email: caiya928@aliyun.com
+host: '127.0.0.1:7001'
+basePath: /api/v1
+tags:
+  - name: user
+    description: 用户相关模块
+  - name: device
+    description: 设备相关模块
+  - name: message
+    description: 消息相关模块
+schemes:
+  - http
+paths:
+  /users:
+    post:
+      tags:
+        - user
+      summary: 新增用户
+      operationId: createUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: 入参user对象
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: 用户添加成功
+          schema:
+            $ref: '#/definitions/User'
+        '500':
+          description: 用户添加失败
+          schema:
+            $ref: '#/definitions/ApiResponse'
+    get:
+      tags:
+        - user
+      summary: 用户列表查询
+      operationId: getUserList
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          description: 当前页
+          required: false
+        - in: query
+          name: pageSize
+          type: integer
+          description: 页大小
+          required: false
+      responses:
+        '200':
+          description: 用户列表查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+                description: 查询出的总条数
+              rows:
+                type: array
+                description: 查询出的每一项
+                items:
+                  $ref: '#/definitions/User'
+        '500':
+          description: 用户添加失败
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  '/users/{id}':
+    put:
+      tags:
+        - user
+      summary: 用户信息修改
+      operationId: updateUser
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: 待修改的用户id
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: 需要修改的内容
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '204':
+          description: 修改成功
+        '500':
+          description: 修改失败
+          schema:
+            $ref: '#/definitions/ApiResponse'
+    get:
+      tags:
+        - user
+      summary: 查询用户详情
+      operationId: getUserDetail
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: 待查询的用户id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/User'
+        '500':
+          description: 查询失败
+          schema:
+            $ref: '#/definitions/ApiResponse'
+    delete:
+      tags:
+        - user
+      summary: 删除用户
+      operationId: deleteUser
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: 待删除的用户id
+          required: true
+          type: integer
+      responses:
+        '204':
+          description: 删除成功
+        '500':
+          description: 删除失败
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  /users/login:
+    post:
+      tags:
+        - user
+      summary: 用户登录
+      operationId: loginUser
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: 用户登录入参
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: 邮箱地址
+              password:
+                type: string
+                description: 用户密码
+      responses:
+        '200':
+          description: 登录成功
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: 用户登录成功凭证
+              email:
+                type: string
+                description: 邮箱地址
+              name:
+                type: string
+                description: 用户名
+              age:
+                type: string
+                description: 用户年龄
+              isAdmin:
+                type: boolean
+                description: 是否管理员
+        '404':
+          description: 邮箱地址或者密码错误
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '500':
+          description: 服务器内部出错
+          schema:
+            $ref: '#/definitions/ApiResponse'
+securityDefinitions:
+  Api_Key:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    type: object
+    description: 用户实体
+    properties:
+      id:
+        type: integer
+        description: 用户id
+        format: int64
+      name:
+        type: string
+        description: 用户名
+      email:
+        type: string
+        description: 用户邮箱
+      password:
+        type: string
+        description: 用户密码
+      age:
+        type: integer
+        description: 用户年龄
+      lastSignInAt:
+        type: integer
+        description: 上次登录（datetime类型）
+      status:
+        type: string
+        description: 用户状态
+      avatar:
+        type: string
+        description: 用户头像
+      company:
+        type: string
+        description: 公司或单位
+      mobile:
+        type: string
+        description: 联系方式
+      iaAdmin:
+        type: boolean
+        description: 是否管理员
+      createdAt:
+        type: string
+        description: 用户添加时间
+      updateAt:
+        type: string
+        description: 用户最新修改时间
+  Device:
+    type: object
+    description: 设备实体
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 设备id
+      name:
+        type: string
+        description: 设备名
+      code:
+        type: string
+        description: 设备编码
+      key:
+        type: string
+        description: 设备激活码
+      pubNetAddr:
+        type: string
+        description: 设备公网地址
+      type:
+        type: integer
+        description: 设备类别id
+      desc:
+        type: string
+        description: 设备描述
+      model:
+        type: string
+        description: 设备型号
+      prodDate:
+        type: string
+        description: 设备出厂日期（datetime类型）
+      userId:
+        type: integer
+        description: 设备所属用户id
+      pic:
+        type: string
+        description: 设备原理图图片地址
+      status:
+        type: string
+        description: 设备状态
+      infoFiles:
+        type: string
+        description: 设备操作说明文件地址
+      createdAt:
+        type: string
+        description: 设备添加时间
+      updateAt:
+        type: string
+        description: 设备最新修改时间
+  DeviceType:
+    type: object
+    description: 设备类别实体
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 设备类别id
+      name:
+        type: string
+        description: 设备分类名
+  Message:
+    type: object
+    description: 实时消息实体
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 消息id
+      type:
+        type: string
+        description: 消息类别
+      content:
+        type: string
+        description: 消息内容
+  ApiResponse:
+    type: object
+    properties:
+      error:
+        type: string
+        description: 错误信息

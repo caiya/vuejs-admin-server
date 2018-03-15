@@ -1,0 +1,183 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta name="description" content="这是一个 index 页面">
+	<meta name="keywords" content="index">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Set render engine for 360 browser -->
+	<meta name="renderer" content="webkit">
+	<!-- No Baidu Siteapp-->
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<title>设备接入端口</title>
+	<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+	<link rel="stylesheet" href="assets/css/v1.css">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="assets/js/tool.js"></script>
+	<script>
+		$(function() {
+			var result = {};
+			var Customdata = {username: "zhaomo", eqname: "eqname", password: "aaaaaa"};
+			$('label.login-alert').hide();
+			
+			//????????????????????????????????????????BUG????????????????????????????????????????
+			//当浏览器保存了上次登陆的session值用户无需在input中输入时，如何保存到result对象中？？
+			//???????????????????????????????????????????????????????????????????????????????????
+			//$("input:not(:empty)").each(function(){
+				//var val = $(this).val();
+				//if(valueOk(val)) {
+					//result[$(this).attr("name")] = val;
+					//$(this).parent().addClass("am-form-success");
+				//} else {
+					//$(this).parent().addClass("am-form-error");
+				//}
+			//});
+			$('a[type="submit"]').click(function(event){
+				if(!Compare(result ,Customdata)) {
+					event.preventDefault();
+					$('#login-alert').modal('open');
+				}
+			});
+			var trueorfalse;
+			var userOk;
+			var eqOk;
+			var pwdOk;
+			
+			//===============================================================
+			//  判断username的合理性：如不合理给出提示；合理则写入result对象
+			//===============================================================
+			var elements = $('input[name="username"]');
+			console.log(elements);
+			$('input[name="username"]').focus(function(){
+				$(this).parent().removeClass("am-form-error");
+				$(this).parent().removeClass("am-form-success");
+				trueorfalse = $('a[type="submit"]').hasClass("am-disabled");
+			});
+			$('input[name="username"]').blur(function(){
+				var val = $(this).val();
+				if( val != '' && val.length >=6 && val.length <=12 ){
+					result["username"] = val;
+					userOk = true;
+					if( userOk && eqOk && pwdOk ) {
+						$('a[type="submit"]').removeClass("am-disabled");
+					}
+					$('label#username').hide();
+					$(this).parent().addClass("am-form-success");
+				}else{
+					result["username"] ? delete result["username"] : result = result;
+					$(this).parent().addClass("am-form-error");
+					if(!trueorfalse) {
+						$('a[type="submit"]').addClass("am-disabled");
+					}
+					userOk = false;
+					$('label#username').show();
+				}
+			});
+			
+			//===============================================================
+			//  判断eqname的合理性：如不合理给出提示；合理则写入result对象
+			//===============================================================
+			$('input[name="eqname"]').focus(function(){
+				$(this).parent().removeClass("am-form-error");
+				$(this).parent().removeClass("am-form-success");
+				trueorfalse = $('a[type="submit"]').hasClass("am-disabled");
+			});
+			$('input[name="eqname"]').blur(function(){
+				var val = $(this).val();
+				if( val != '' && val.length >=6 && val.length <=12 ){
+					result["eqname"] = val;
+					eqOk = true;
+					if( userOk && eqOk && pwdOk ) {
+						$('a[type="submit"]').removeClass("am-disabled");
+					}
+					$('label#eqname').hide();
+					$(this).parent().addClass("am-form-success");
+				}else{
+					result["eqname"] ? delete result["eqname"] : result = result;
+					$(this).parent().addClass("am-form-error");
+					if(!trueorfalse) {
+						$('a[type="submit"]').addClass("am-disabled");
+					}
+					eqOk = false;
+					$('label#eqname').show();
+				}
+			});
+			
+			//===============================================================
+			//  判断password的合理性：如不合理给出提示；合理则写入result对象
+			//===============================================================
+			$('input[name="password"]').focus(function(){
+				$(this).parent().removeClass("am-form-error");
+				$(this).parent().removeClass("am-form-success");
+				trueorfalse = $('a[type="submit"]').hasClass("am-disabled");
+			});
+			$('input[name="password"]').blur(function(){
+				var val = $(this).val();
+				if( val != '' && val.length >=6 && val.length <=12 ){
+					result["password"] = val;
+					pwdOk = true;
+					if( userOk && eqOk && pwdOk ) {
+						$('a[type="submit"]').removeClass("am-disabled");
+					}
+					$('label#password').hide();
+					$(this).parent().addClass("am-form-success");
+				}else{
+					result["password"] ? delete result["password"] : result = result;
+					$(this).parent().addClass("am-form-error");
+					if(!trueorfalse) {
+						$('a[type="submit"]').addClass("am-disabled");
+					}
+					pwdOk = false;
+					$('label#password').show();
+				}
+			});
+		});	
+
+	</script>
+</head>
+
+<body>
+<div class="am-g am-vertical-align" style="height:84%;">
+	<div class="am-container am-vertical-align-middle">
+		<div class="am-text-center co-name">
+			<a href="http://www.perfectlight.cn" class="tpl-logo">
+                <img src="assets/img/logo.png" alt="">
+			</a>
+			设备接入平台
+			<hr/>
+		</div>
+		<div>
+			<form action="" method="post" class="am-form form-login" id="login-vld-msg">
+				<fieldset class="am-form-set" id="form">
+					<div class="am-form-group">
+						<input type="text" class="am-form-field" placeholder="输入用户名(至少6个字符)" name="username">
+						<label class="login-alert" id="username">用户名不能为空，且只能为6—12个字符</label>
+					</div>
+					<div class="am-form-group">
+						<input type="text" class="am-form-field" placeholder="输入设备名(至少6个字符)" name="eqname">
+						<label class="login-alert" id="eqname">设备名不能为空，且只能为6—12个字符</label>
+					</div>
+					<div class="am-form-group">
+				  		<input type="password" class="am-form-field" placeholder="密码(至少6个字符)"  name="password">
+						<label class="login-alert" id="password">密码不能为空，且只能为6—12个字符</label>
+					</div>
+				</fieldset>
+				<a type="submit" class="am-btn am-btn-primary am-btn-block" href="testmqtt.html" target="_self">接入设备</a>
+				<div class="am-modal am-modal-alert" tabindex="-1" id="login-alert">
+					<div class="am-modal-dialog">
+						<div class="am-modal-hd">验证错误</div>
+						<div class="am-modal-bd">请确认登陆信息是否填写正确,如无法登陆请致电:88888888</div>
+						<div class="am-modal-footer">
+							<span class="am-modal-btn">确定</span>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>北京泊菲莱科技有限公司</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/echarts.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body data-type="index">
+
+
+    <header class="am-topbar am-topbar-inverse admin-header">
+        <div class="am-topbar-brand">
+            <a href="http://www.perfectlight.cn" class="tpl-logo">
+                <img src="assets/img/logo.png" alt="">
+            </a>
+        </div>
+        <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
+
+        </div>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+        <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+            <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
+				<!-- START动态数据：提示信息 -->
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="am-icon-bell-o"></span> 提醒 <span class="am-badge tpl-badge-danger am-round">3</span></span>
+                    </a>
+                    <ul class="am-dropdown-content tpl-dropdown-content">
+                        <li class="tpl-dropdown-content-external">
+                            <h3>你有 <span class="tpl-color-danger">3</span> 条提醒</h3><a href="###">全部</a></li>
+                        <li class="tpl-dropdown-list-bdbc"><a href="#" class="tpl-dropdown-list-fl"><span class="am-icon-btn am-icon-bell-o tpl-dropdown-ico-btn-size tpl-badge-danger"></span> {warningmessage}</a>
+                            <span class="tpl-dropdown-list-fr">{date}</span>
+                        </li>
+                        <li class="tpl-dropdown-list-bdbc"><a href="#" class="tpl-dropdown-list-fl"><span class="am-icon-btn am-icon-check tpl-dropdown-ico-btn-size tpl-badge-danger"></span> {generalmessage}</a>
+                            <span class="tpl-dropdown-list-fr">{date}</span>
+                        </li>
+                        <li class="tpl-dropdown-list-bdbc"><a href="#" class="tpl-dropdown-list-fl"><span class="am-icon-btn am-icon-bell-o tpl-dropdown-ico-btn-size tpl-badge-danger"></span> {warningmessage}</a>
+                            <span class="tpl-dropdown-list-fr">{date}</span>
+                        </li>
+                    </ul>
+                </li>
+				<!-- END动态数据：提示信息 -->
+                <!--<li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="am-icon-comment-o"></span> 消息 <span class="am-badge tpl-badge-danger am-round">9</span></span>
+                    </a>
+                    <ul class="am-dropdown-content tpl-dropdown-content">
+                        <li class="tpl-dropdown-content-external">
+                            <h3>你有 <span class="tpl-color-danger">9</span> 条新消息</h3><a href="###">全部</a></li>
+                        <li>
+                            <a href="#" class="tpl-dropdown-content-message">
+                                <span class="tpl-dropdown-content-photo">
+                      <img src="assets/img/user02.png" alt=""> </span>
+                                <span class="tpl-dropdown-content-subject">
+                      <span class="tpl-dropdown-content-from"> 禁言小张 </span>
+                                <span class="tpl-dropdown-content-time">10分钟前 </span>
+                                </span>
+                                <span class="tpl-dropdown-content-font"> Amaze UI 的诞生，依托于 GitHub 及其他技术社区上一些优秀的资源；Amaze UI 的成长，则离不开用户的支持。 </span>
+                            </a>
+                            <a href="#" class="tpl-dropdown-content-message">
+                                <span class="tpl-dropdown-content-photo">
+                      <img src="assets/img/user03.png" alt=""> </span>
+                                <span class="tpl-dropdown-content-subject">
+                      <span class="tpl-dropdown-content-from"> Steam </span>
+                                <span class="tpl-dropdown-content-time">18分钟前</span>
+                                </span>
+                                <span class="tpl-dropdown-content-font"> 为了能最准确的传达所描述的问题， 建议你在反馈时附上演示，方便我们理解。 </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li> -->
+				<!-- START动态数据：设备状态通知 -->
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="am-icon-calendar"></span> 设备联网状态 <span class="am-badge tpl-badge-primary am-round">4</span></span>
+                    </a>
+                    <ul class="am-dropdown-content tpl-dropdown-content">
+                        <li class="tpl-dropdown-content-external">
+                            <h3>你有 <span class="tpl-color-primary">4</span> 个设备挂载到系统中</h3><!--<a href="###">全部</a> --></li>
+                        <li>
+                           
+                        </li>
+                        <li>
+						
+                        </li>
+                        <li>
+
+                        </li>
+                    </ul>
+                </li>
+				<!-- END动态数据：设备状态通知 -->
+                <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen" class="tpl-header-list-link"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+                <!-- START动态数据：用户信息/名称/头像 -->
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="tpl-header-list-user-nick">{user:name}</span><span class="tpl-header-list-user-ico"> <img src="assets/img/user01.png"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="#"  data-am-modal="{target: '#user-info'}"><span class="am-icon-bell-o"></span> 资料</a></li>
+                        <li><a href="#"><span class="am-icon-sign-out"></span> 退出</a></li>
+						<div class="am-modal am-modal-alert" tabindex="-1" id="user-info">
+							<div class="am-modal-dialog">
+    										<div class="am-modal-hd">如要修改个人信息，请在输入框中修改并点保存</div>
+    										<div class="am-modal-bd">
+												<p><ul class="am-avg-sm-2">
+												<li>您的账号是:</li><li><input type="text" class="am-modal-prompt-input am-form-field am-radius" placeholder="{username}" /></li>
+												</ul></p>
+												<p><ul class="am-avg-sm-2">
+                                                <li>您的单位是:</li><li><input type="text" class="am-modal-prompt-input am-form-field am-radius" placeholder="{description}" /></li>
+												</ul></p>
+												<p><ul class="am-avg-sm-2">
+                                                <li>输入您的新密码:</li><li><input type="password" class="am-modal-prompt-input am-form-field am-radius" placeholder="请在这里输入您要设置的新密码" /></li>
+												</ul></p>
+    										</div>
+    										<div class="am-modal-footer">
+      										<span class="am-modal-btn">保存</span>
+    										</div>
+  										</div>
+						</div>
+                    </ul>
+                </li>
+				<!-- END动态数据：用户信息/名称/头像 -->
+            </ul>
+        </div>
+    </header>
+
+
+
+
+
+
+
+    <div class="tpl-page-container tpl-page-header-fixed">
+
+
+        <div class="tpl-left-nav tpl-left-nav-hover">
+            <div class="tpl-left-nav-list">
+                <ul class="tpl-left-nav-menu">
+                    <li class="tpl-left-nav-item">
+                        <a href="javascript:;" class="nav-link tpl-left-nav-link-list  active">
+                            <i class="am-icon-table"></i>
+                            <span>设备管理</span>
+                            <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+                        </a>
+                        <ul class="tpl-left-nav-sub-menu">
+                            <li>
+                                <a href="equipment_manage.html">
+                                    <i class="am-icon-angle-right"></i>
+                                    <span>设备列表</span>
+                                </a>
+
+                                <a href="equipment_add.html"  class="active">
+                                    <i class="am-icon-angle-right"></i>
+                                    <span>添加设备</span>
+                                    <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+								</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="tpl-left-nav-item">
+                        <a href="user_manage.html" class="nav-link">
+                            <i class="am-icon-bar-chart"></i>
+                            <span>会员管理</span>
+                            <!--<i class="tpl-left-nav-content tpl-badge-danger">12</i> -->
+                        </a>
+                    </li>
+                    <li class="tpl-left-nav-item">
+                        <a href="article_manage.html" class="nav-link">
+                            <i class="am-icon-key"></i>
+                            <span>文章管理</span>
+							<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+                        </a>
+                    </li>
+					
+					<li class="tpl-left-nav-item">
+                        <a href="notice.html" class="nav-link">
+                            <i class="am-icon-key"></i>
+                            <span>通知管理</span>
+                        </a>
+                    </li>
+					
+					<li class="tpl-left-nav-item">
+                        <a href="adminlogin.html" class="nav-link">
+                            <i class="am-icon-key"></i>
+                            <span>登录</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="tpl-content-wrapper">
+            <div class="tpl-content-page-title">
+                泊菲莱设备管理平台V1.0 首页
+            </div>
+            <!--<ol class="am-breadcrumb">
+                <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">分类</a></li>
+                <li class="am-active">内容</li>
+            </ol> -->
+            <div class="tpl-content-scope">
+                <div class="note-admin note-info">
+                    <h3>添加设备
+                        <span class="close" data-close="note"></span>
+                    </h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="am-container am-alert am-alert-warning" data-am-alert>
+				    <button type="button" class="am-close">&times;</button>
+					  <p>{username}的{设备ID}在{DATE TIME}与系统失去链接请持续关注</p>
+				</div>
+				<div class="am-container am-alert am-alert-danger" data-am-alert>
+				    <button type="button" class="am-close">&times;</button>
+					  <p>{username}的账号在{DATE TIME}与系统链接异常，请与用户确认是否本人登陆</p>
+				</div>
+            </div>
+
+			<div class="tpl-portlet-components">
+                <div class="tpl-block">
+				
+<form class="am-form am-form-horizontal">
+  <div class="am-form-group am-form-warning">
+    <label for="doc-ipt-3-a" class="am-u-sm-2 am-form-label add-eq">设备型号：</label>
+    <div class="am-u-sm-10">
+      <input type="text" id="doc-ipt-3-a" class="am-form-field" placeholder="输入您设备的型号">
+    </div>
+  </div>
+  
+  <div class="am-form-group am-form-warning">
+    <label for="doc-ipt-3-a" class="am-u-sm-2 am-form-label add-eq">设备激活码：</label>
+    <div class="am-u-sm-10">
+      <input type="text" id="doc-ipt-3-a" class="am-form-field" placeholder="输入设备激活码">
+    </div>
+  </div>
+  
+  <div class="am-form-group am-form-warning">
+    <label for="doc-ipt-3-a" class="am-u-sm-2 am-form-label add-eq">设备描述：</label>
+    <div class="am-u-sm-10">
+	  <textarea class="am-form-field" rows="6" id="doc-ta-1"></textarea>
+    </div>
+  </div>
+  
+  <div class="am-form-group am-form-warning">
+    <label for="doc-ipt-3-a" class="am-u-sm-2 am-form-label add-eq">监控模型：</label>
+    <div class="am-u-sm-10">
+	  <input type="file" id="doc-ipt-file-1">
+      <p class="am-form-help">请选择要上传的文件...</p>
+    </div>
+  </div>
+  <div class="am-form-group am-form-warning">
+    <label for="doc-ipt-3-a" class="am-u-sm-2 am-form-label add-eq">数据库建表：</label>
+    <div class="am-u-sm-10">
+	  <input type="file" id="doc-ipt-file-1">
+      <p class="am-form-help">请选择要上传的文件...</p>
+    </div>
+  </div>
+  <button type="button" class="am-btn am-btn-primary">添加设备</button>
+</form>
+					
+					
+					
+                </div>
+            </div>
+        </div>
+    </div>
+<footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{  }">
+    <div class="am-footer-switch">
+      <span class="am-footer-ysp" data-rel="mobile"
+          data-am-modal="{target: '#am-switch-mode'}">
+          云适配版
+      </span>
+      <span class="am-footer-divider"> | </span>
+      <a id="godesktop" data-rel="desktop" class="am-footer-desktop" href="javascript:">
+          电脑版
+      </a>
+    </div>
+    <div class="am-footer-miscs ">
+		<p>由 <a href="http://www.perfectlight.cn/" title="泊菲莱科技" target="_blank" class="">泊菲莱科技</a>提供技术支持</p>
+        <p>CopyRight©2017  北京泊菲莱科技有限公司</p>
+        <p>京ICP备13033158</p>
+    </div>
+</footer>
+
+<div id="am-footer-modal" class="am-modal am-modal-no-btn am-switch-mode-m am-switch-mode-m-default">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd am-modal-footer-hd">
+	          <a href="javascript:void(0)" data-dismiss="modal" class="am-close am-close-spin " data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+          您正在浏览的是<span class="am-switch-mode-owner">云适配</span><span class="am-switch-mode-slogan">为您当前手机订制的移动网站。</span>
+        </div>
+    </div>
+</div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/iscroll.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

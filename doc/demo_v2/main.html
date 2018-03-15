@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>mqtt.js</title>
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="assets/js/browserMqtt.js"></script>
+	
+	<style>
+       .myform{
+           margin-top: 15px;
+       }
+
+       #mqtt-log-containor {
+           height:80%;
+           width: 100%;
+           margin-top: 15px;
+           /*background: #000;*/
+           /*color:green;*/
+       }
+       #mqtt-log{
+           width: 100%;
+           height: 600px;
+           overflow: auto;
+       }
+        #clear{
+            color: white;
+        }
+
+    </style>
+	<script >
+        var client;
+		lastpoint = new Object();
+        $(document).ready(function () {
+
+            $("#disconnectBtn").hide();
+            $("#subscribe").hide();
+            $("#connectBtn").show();
+
+
+            $("#clear").on('click',function () {
+
+                $("#mqtt-log").empty()
+                log("Clear :)")
+            })
+
+            $('#unsubscribeBtn').on('click', function () {
+
+                var topic = $("#mqtt-topic").val();
+                if(topic<1){
+                    log('topic 不能为空null')
+                    return
+                }
+                client.unsubscribe(topic);
+                log('>>>退订topic = '+topic)
+            })
+
+            $('#subscribeBtn').on('click', function () {
+
+                var topic = $("#mqtt-topic").val();
+                if(topic<1){
+                    log('topic 不能为null')
+                    return
+                }
+                client.subscribe(topic);
+                log('>>>订阅topic = '+topic)
+            })
+            $('#disconnectBtn').on('click', function () {
+
+                log('end.')
+                client.end();
+                $("#connectBtn").show();
+                $(this).hide();
+                $("#subscribe").hide();
+            })
+
+            $('#connectBtn').on('click', function () {
+
+                var host = $("#mqtt-host").val();
+                var port = $("#mqtt-port").val();
+
+                if(host.length<1||port<1){
+                    log('host和port不能为空...')
+                    return;
+                }
+                log('开始连接...')
+
+                $(this).hide();
+                $("#disconnectBtn").show();
+                $("#subscribe").show();
+
+                client = mqtt.connect('ws://106.14.193.14:8083/mqtt');
+				//client = mqtt.connect('ws://' + host + ':' + port+ '/mqtt');
+                client.on('connect', function () {
+
+                    log('connect :)')
+					client.subscribe('test');
+                    log('>>>订阅topic = test')
+
+                    //client.subscribe('mytopic');
+                    //client.publish('mytopic', 'hello mqtt123');
+
+                    $(this).hide();
+                    $("#disconnectBtn").show();
+                    $("#subscribe").show();
+					
+                });
+                client.on("error", function (error) {
+
+                    log(error.toString());
+                    $(this).show();
+                    $("#disconnectBtn").hide();
+                    $("#subscribe").hide();
+                });
+                client.on("message", function (topic, payload) {
+                    log('收到topic = ' + topic + ' 消息: ' + payload.toString());
+					lastpoint.x = (new Date()).toLocaleString();
+					lastpoint.y = parseInt(payload.toString());
+					log(lastpoint.x+' ; '+lastpoint.y);
+                    //alert([topic, payload].join(": "));
+                    //client.end();
+                });
+
+                //client.publish("mytopic", "hello world!");
+            })
+        });
+
+        function log(data) {
+
+            $('#mqtt-log').prepend('<p>'+data+'</p>');
+
+        }
+    </script>
+
+</head>
+
+<body>
+
+<div class="container" style="padding: 20px">
+
+    <div class="well well-lg">MQTT Client</div>
+
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="mqtt-host">MQTT Host</label>
+            <input type="text" class="form-control" id="mqtt-host" placeholder="MQTT Host">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="mqtt-port">MQTT Port</label>
+            <input type="text" class="form-control" id="mqtt-port" placeholder="MQTT Port">
+        </div>
+        <button type="button" class="btn btn-primary" id="connectBtn">连接</button>
+        <button type="button" class="btn btn-danger" id="disconnectBtn">断开</button>
+
+    </form>
+
+    <div class="myform" id="subscribe">
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only" for="mqtt-host">MQTT Host</label>
+                <input type="text" class="form-control" id="mqtt-topic" placeholder="MQTT Topic">
+            </div>
+            <button type="button" class="btn btn-success" id="subscribeBtn">订阅</button>
+            <button type="button" class="btn btn-warning" id="unsubscribeBtn">退订</button>
+
+        </form>
+    </div>
+
+    <div class="panel panel-success" id="mqtt-log-containor">
+        <div class="panel-heading">
+            <span class="label label-info">日志</span>
+            <!--<h3 class="panel-title" style="display:inline">日志</h3>-->
+            <!--<a id="clear">Clear</a>-->
+            <span class="label label-danger"><a id="clear">Clear</a></span>
+        </div>
+        <div class="panel-body" id="mqtt-log"></div>
+    </div>
+
+</div>
+
+</body>
+</html>

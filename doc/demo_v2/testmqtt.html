@@ -1,0 +1,185 @@
+﻿<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="eqname产品监控页面">
+	<meta name="keywords" content="index">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Set render engine for 360 browser -->
+	<meta name="renderer" content="webkit">
+	<!-- No Baidu Siteapp-->
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<title>eqname产品监控页面</title>
+	<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+	<link rel="stylesheet" href="assets/css/v1.css">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="assets/js/amazeui.min.js"></script>
+	<script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+	<script src="assets/js/browserMqtt.js"></script>
+</head>
+<body>
+	<div id="container" style="width:100%; height: 400px; margin: 0 auto"></div>
+<script language="JavaScript">
+	var realtime = { a:0, b:0, time:0 }  //缓存实时数据对象！
+	var arrList = new Array();    //用于解析数据结构缓存数据的数组
+	//========================================================================
+	//            运行mqtt客户端
+	//========================================================================
+	var client;
+	$(document).ready(function() {  
+		//使用的websocket：连接到服务器106.14.193.14:8083
+		client = mqtt.connect('ws://106.14.193.14:8083/mqtt');
+		//连接服务器并订阅‘test’主题
+		client.on('connect', function () {
+			client.subscribe('test')
+			console.log('connect ok!')
+			console.log(realtime);
+		});
+		//mqtt错误处理函数
+		client.on("error", function (error) {
+			console.log(error.toString());
+		});
+		//mqtt接受消息后处理函数：payload为传递过来的二进制数据消息
+		client.on("message", function (topic, payload) {
+        	realtime.time = (new Date()).getTime();
+			arrList = payload.toString().split("|");
+			if( arrList.length > 0 ) {
+				for ( x in arrList ) {
+					var arr2 = arrList[x].split(":");
+					if(arr2.length = 2) {
+						if( arr2[0] == "a" ) {
+							realtime.a = parseFloat(arr2[1]);
+							$('li#valueA').html(realtime.a);
+						}
+						if( arr2[0] == "b" ) {
+							realtime.b = parseFloat(arr2[1]);
+							$('li#valueB').html(realtime.b);
+						}
+					}
+				}
+			}
+			console.log(realtime);
+		});
+		
+		//=====================================================================
+		//            highcharts构建图表
+		//=====================================================================
+		var chart = {
+			type: 'spline',
+	  		animation: Highcharts.svg, // don't animate in IE < IE 10.
+      		marginRight: 10,
+	  		events: {
+         		load: function () {
+           		 // set up the updating of the chart each second
+            		var seriesA = this.series[0];
+					var seriesB = this.series[1];
+            		setInterval(function () {
+			   			var x = (new Date()).getTime(), // current time
+               			a = realtime.a, b = realtime.b;
+               			seriesA.addPoint([x, a], true, true);
+			   			seriesB.addPoint([x, b], true, true);
+            		}, 1000);
+         		}
+			}
+		};
+		var title = {
+			text: '测量点实时监控'   
+		};   
+		var xAxis = {
+			type: 'datetime',
+			tickPixelInterval: 150
+		};
+		var yAxis = {
+			title: {
+				text: 'Value'
+			},
+			plotLines: [{
+				value: 0,
+				width: 1,
+				color: '#808080'
+			}]
+		};
+		var tooltip = {
+			formatter: function () {
+				return '<b>' + this.series.name + '</b><br/>' +
+				Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+				Highcharts.numberFormat(this.y, 2);
+			}
+		};
+		var plotOptions = {
+			area: {
+				pointStart: 1940,
+				marker: {
+					enabled: false,
+					symbol: 'circle',
+					radius: 2,
+					states: {
+						hover: {
+							enabled: true
+						}
+					}
+				}
+			}
+		};
+		var legend = {
+			enabled: false
+		};
+		var exporting = {
+			enabled: false
+		};
+		function dataInit(ydata){
+			var time = (new Date()).getTime(),data=[];
+			for(i = -19; i <= 0; i += 1){
+				data.push({
+					x: time + i * 1000,
+					y: ydata
+				})
+   			}
+			return data;
+		}  
+		var series= [
+			{
+      			name: 'ParmA',
+      			data: dataInit(realtime.a)   
+  			},
+			{
+      			name: 'ParmB',
+      			data: dataInit(realtime.b)   
+  			}
+		];     
+      
+		var json = {};   
+		json.chart = chart; 
+		json.title = title;     
+		json.tooltip = tooltip;
+		json.xAxis = xAxis;
+		json.yAxis = yAxis; 
+		json.legend = legend;  
+		json.exporting = exporting;   
+		json.series = series;
+		json.plotOptions = plotOptions;
+   
+		Highcharts.setOptions({
+			global: {
+				useUTC: false
+			}
+		});
+		$('#container').highcharts(json);
+	});
+</script>
+	<div class="am-g">
+		<div class="am-container">
+			<ul class="am-avg-sm-2 am-text-center">
+				<li>a点测量值为:</li>
+				<li>b点测量值为:</li>
+			</ul>
+			<ul class="am-avg-sm-2  am-text-center">
+				<li id="valueA">0</li>
+				<li id="valueB">0</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

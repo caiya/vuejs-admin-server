@@ -1,0 +1,160 @@
+			$('#login-vld-msg').validator({
+				onValid: function(validity) {
+					$(validity.field).closest('.am-form-group').find('.am-alert').hide();
+				},
+		
+				onInValid: function(validity) {
+					var $field = $(validity.field);
+					var $group = $field.closest('.am-form-group');
+					var $alert = $group.find('.am-alert');
+					// 使用自定义的提示信息 或 插件内置的提示信息
+					var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+					
+					if (!$alert.length) {
+						$alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+						appendTo($group);
+					}
+		
+					$alert.html(msg).show();
+				}
+			});
+
+
+
+				if ($(this).attr('type') == 'checkbox') {
+					// 获取checkbox元素选中的值
+					val = $(this).prop('checked');
+				} else if ($(this).attr('type') == 'radio') {
+					// 获取checkbox元素选中的值
+					val = $(this).prop('checked');
+				} else {
+					val = $(this).val();
+				}
+
+
+
+ // 验证邮箱
+ function checkEmail() {
+     var email = document.regForm.email.value;
+     var etab = document.getElementById('etab');
+     if (email.match(/^[\w-]+@[\w-]+(\.\w+){1,3}$/) == null) {
+         etab.innerHTML = '* 邮箱格式不正确.';
+         etab.style.color = '#f00';
+         return false;
+     } else {
+         etab.innerHTML = '* 通过验证.';
+         etab.style.color = '#0a0';
+         return true;
+     }
+ }
+
+ // 验证用户
+ function checkUser() {
+     var user = document.regForm.user.value;
+     var utab = document.getElementById('utab');
+     if (user.match(/^\w{6,12}$/) == null) {
+         utab.innerHTML = '* 用户名格式不正确.';
+         utab.style.color = '#f00';
+         return false;
+     } else {
+         utab.innerHTML = '* 通过验证.';
+         utab.style.color = '#0a0';
+         return true;
+     }
+ }
+
+ // 验证密码
+ function checkPass() {
+     console.log(111)
+     var pass = document.regForm.pass.value;
+     var ptab = document.getElementById('ptab');
+     if (pass.length < 6 || pass.length > 18) {
+         ptab.innerHTML = '* 密码长度不合法.';
+         ptab.style.color = '#f00';
+         return false;
+     } else {
+         ptab.innerHTML = '* 通过验证.';
+         ptab.style.color = '#0a0';
+         return true;
+     }
+ }
+
+ // 验证重复密码
+ function checkRepass() {
+     var pass = document.regForm.pass.value;
+     var repass = document.regForm.repass.value;
+     var rptab = document.getElementById('rptab');
+     if (repass !== pass) {
+         rptab.innerHTML = '* 两次密码输入不一致.';
+         rptab.style.color = '#f00';
+         return false;
+     } else {
+         rptab.innerHTML = '* 通过验证.';
+         rptab.style.color = '#0a0';
+         return true;
+     }
+ }
+
+ // 提交时 总体验证
+ function checkForm() {
+     return checkEmail() && checkUser() && checkPass() && checkRepass();
+ }
+
+
+
+
+
+<h1>
+    <center>表单验证</center>
+</h1>
+<hr>
+<form action="1.php" method="post" name="regForm" onsubmit="return checkForm()">
+    <table align="center">
+        <tbody><tr>
+            <td>*邮箱</td>
+            <td><input type="text" name="email" onblur="checkEmail()"></td>
+            <td id="etab">* 必填项,请输入常用邮箱</td>
+        </tr>
+        <tr>
+            <td>*用户名</td>
+            <td><input type="text" name="user" onblur="checkUser()"></td>
+            <td id="utab">* 必填项,请输入用户名(数字字母下划线)6-12位</td>
+        </tr>
+        <tr>
+            <td>*密码</td>
+            <td><input type="password" name="pass" onblur="checkPass()"></td>
+            <td id="ptab">* 必填项,请输入6-18位的密码</td>
+        </tr>
+        <tr>
+            <td>*重复密码</td>
+            <td><input type="password" name="repass" onblur="checkRepass()"></td>
+            <td id="rptab">* 必填项,请再输入一次密码</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="注 册"></td>
+        </tr>
+    </tbody></table>
+</form>
+
+
+
+
+
+
+
+
+---------------------------------图表监控页面添加数值显示--------------------------------
+
+	<div class="am-g am-vertical-align">
+		<div class="am-container am-vertical-align-middle">
+			<ul class="am-avg-sm-2">
+				<li>a点测量值为:</li>
+				<li>b点测量值为:</li>
+			</ul>
+			<ul class="am-avg-sm-2">
+				<li id="valueA">0</li>
+				<li id="valueB">0</li>
+			</ul>
+		</div>
+	</div>

@@ -1,0 +1,126 @@
+<html>
+<head>
+   <title>Highcharts 教程 | 菜鸟教程(runoob.com)</title>
+   <meta charset="utf-8">
+   <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+   <script src="http://code.highcharts.com/highcharts.js"></script>   
+   <script src="http://code.highcharts.com/modules/data.js"></script> 
+</head>
+<body>
+<div id="container" style="width:100%; height: 400px; margin: 0 auto"></div>
+<script language="JavaScript">
+$(document).ready(function() {
+   var title = {
+      text: '从www.highcharts.com网站上生成的表格数据测试'   
+   };
+   var subtitle = {
+      text: 'Source: Google Analytics'
+   };
+   var xAxis = {
+      tickInterval: 7 * 24 * 3600 * 1000, // one week
+      tickWidth: 0,
+      gridLineWidth: 1,
+      labels: {
+         align: 'left',
+         x: 3,
+         y: -3
+      }
+   };
+   var yAxis = [{ // left y axis
+         title: {
+            text: null
+         },
+         labels: {
+            align: 'left',
+            x: 3,
+            y: 16,
+            format: '{value:.,0f}'
+         },
+         showFirstLabel: false
+      },{ // right y axis
+         linkedTo: 0,
+         gridLineWidth: 0,
+         opposite: true,
+         title: {
+            text: null
+         },
+         labels: {
+            align: 'right',
+            x: -3,
+            y: 16,
+            format: '{value:.,0f}'
+         },
+         showFirstLabel: false
+      }
+   ];   
+
+   var tooltip = {
+      shared: true,
+      crosshairs: true
+   }
+
+   var legend = {
+      align: 'left',
+      verticalAlign: 'top',
+      y: 20,
+      floating: true,
+      borderWidth: 0
+   };
+
+   var plotOptions = {
+      series: {
+         cursor: 'pointer',
+         point: {
+            events: {
+               click: function (e) {
+                  hs.htmlExpand(null, {
+                     pageOrigin: {
+                        x: e.pageX || e.clientX,
+                        y: e.pageY || e.clientY
+                     },
+                     headingText: this.series.name,
+                     maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) 
+                        + ':<br/> ' + this.y + ' 吞吐量',
+                     width: 200
+                  });
+               }
+            }
+         },
+         marker: {
+            lineWidth: 1
+         }
+      }
+   }
+   
+   var series =  [{
+         name: '所有的吞吐量',
+         lineWidth: 4,
+         marker: {
+            radius: 4
+         }
+      }, {
+         name: '吞吐量测试'
+      }]
+
+   var json = {};
+
+   json.title = title;
+   json.subtitle = subtitle;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;
+   json.tooltip = tooltip;
+   json.legend = legend;
+   json.series = series;
+   json.plotOptions = plotOptions;
+   
+   $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=analytics.csv&callback=?', function (csv) {
+      var data = {
+         csv: csv
+      };
+	  json.data = data;
+	  $('#container').highcharts(json);
+   });   
+});
+</script>
+</body>
+</html>
