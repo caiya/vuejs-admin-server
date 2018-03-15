@@ -1,6 +1,6 @@
-# oAuthCenter
+# vuejs-admin-server
 
-nodejs OAuth authorization server implements based on eggjs
+vuejs-admin server implements based on eggjs
 
 ## 快速入门
 
