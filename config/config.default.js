@@ -11,10 +11,6 @@ module.exports = appInfo => {
         '.html': 'nunjucks',
       },
     },
-    oAuth2Server: {
-      debug: true,
-      grants: ['password', 'authorization_code', 'refresh_token']
-    },
     sequelize: {
       dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
       database: 'oAuthCenter',
@@ -36,24 +32,6 @@ module.exports = appInfo => {
         '.jpeg'
       ]
     },
-    auth: {
-      enable: true,
-      match(ctx) {
-        // 只有 api 才开启
-        const reg = /api\/v1/i;     // 包含api
-        const regExcept = /users\/login|api\/v1\/tools/i     // 不包含users/login接口
-        return reg.test(ctx.request.path) && !regExcept.test(ctx.request.path)
-      },
-      secret: 'shared-secret'
-    },
-    errorHandler: {
-      enable: true,
-      match(ctx) {
-        // 只有 api 才开启
-        const reg = /api\/v1/i;     // 包含api
-        return reg.test(ctx.request.path);
-      }
-    },
     mqtt: {
       url: 'mq.tongxinmao.com:18830/web',
       options: {
@@ -70,7 +48,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1513142797863_8350';
 
   // add your config here
-  config.middleware = ['errorHandler', 'auth'];
+  // config.middleware = ['errorHandler', 'auth'];
 
   return config;
 };
