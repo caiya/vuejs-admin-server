@@ -13,15 +13,15 @@ module.exports = appInfo => {
     },
     sequelize: {
       dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
-      database: 'oAuthCenter',
-      host: '216.250.107.28',
+      database: 'oauth2',
+      host: '47.93.13.160',
       port: '3306',
-      username: 'oAuthCenter',
-      password: 'PT5Gh6zdAK'
+      username: 'caiya',
+      password: 'CaiYa928@aliyun.com',
     },
     security: {
       csrf: {
-        enable: false
+        enable: false,
       },
     },
     multipart: {
@@ -29,19 +29,22 @@ module.exports = appInfo => {
       whitelist: [
         '.png',
         '.jpg',
-        '.jpeg'
-      ]
+        '.jpeg',
+      ],
     },
     mqtt: {
       url: 'mq.tongxinmao.com:18830/web',
       options: {
-        
-      }
+
+      },
     },
     cors: {
       origin: '*',
-      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
-    }
+      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    },
+    auth: {
+      secret: 'awdaw34khjdabhgdawd',
+    },
   };
 
   // use for cookie sign key, should change to your own and keep security
